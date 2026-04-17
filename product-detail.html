@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المنتج</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="crown">👑</span>
+                <div>
+                    <h1>غرف نوم الملوك</h1>
+                    <p>أثاث فاخر</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="products.html" class="active">المنتجات</a>
+                <a href="about.html">من نحن</a>
+            </nav>
+            <button class="menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="product-detail">
+            <div class="container">
+                <a href="products.html" class="back-link">← العودة للمنتجات</a>
+                <div id="productDetail" class="detail-content">
+                    <p class="loading">جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 غرف نوم الملوك. جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        async function loadProductDetail() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            if (!id) {
+                document.getElementById('productDetail').innerHTML = '<p>معرف المنتج غير صحيح</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/products/${id}`);
+                if (!response.ok) throw new Error('المنتج غير موجود');
+                
+                const product = await response.json();
+                document.getElementById('productDetail').innerHTML = `
+                    <div class="detail-grid">
+                        <div class="detail-image">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="detail-info">
+                            <h1>${product.name}</h1>
+                            <p class="detail-description">${product.description}</p>
+                            <div class="detail-price">${product.price} ريال</div>
+                            <button class="btn-primary" onclick="alert('شكراً للاهتمام! تواصل معنا على الهاتف')">
+                                اتصل بنا
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('productDetail').innerHTML = '<p>حدث خطأ في التحميل</p>';
+            }
+        }
+
+        loadProductDetail();
+    </script>
+</body>
+</html>

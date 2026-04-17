@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المنتجات - غرف نوم الملوك</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <span class="crown">👑</span>
+                <div>
+                    <h1>غرف نوم الملوك</h1>
+                    <p>أثاث فاخر</p>
+                </div>
+            </div>
+            <nav class="nav">
+                <a href="index.html">الرئيسية</a>
+                <a href="products.html" class="active">المنتجات</a>
+                <a href="about.html">من نحن</a>
+            </nav>
+            <button class="menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <h1>المنتجات</h1>
+        </section>
+
+        <section class="products">
+            <div class="container">
+                <div id="productsList" class="products-grid">
+                    <p class="loading">جاري التحميل...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 غرف نوم الملوك. جميع الحقوق محفوظة</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        async function loadProducts() {
+            try {
+                const response = await fetch('/api/products');
+                const products = await response.json();
+                const productsList = document.getElementById('productsList');
+                
+                if (products.length === 0) {
+                    productsList.innerHTML = '<p class="no-products">لا توجد منتجات حالياً</p>';
+                    return;
+                }
+
+                productsList.innerHTML = products.map(product => `
+                    <a href="product-detail.html?id=${product.id}" class="product-card">
+                        <div class="product-image">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p class="product-desc">${product.description.substring(0, 50)}...</p>
+                            <div class="product-price">${product.price} ريال</div>
+                        </div>
+                    </a>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('productsList').innerHTML = '<p>حدث خطأ في التحميل</p>';
+            }
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>
