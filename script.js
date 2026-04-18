@@ -1,10 +1,10 @@
 let products = [];
 
 const DEFAULT_PRODUCTS = [
-    { id: 101, name: "سرير كانوبي ملكي", image: "https://images.pexels.com/photos/1571459/pexels-photo-1571459.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" },
-    { id: 102, name: "سرير مخمل فاخر", image: "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" },
-    { id: 103, name: "كومودينو ذهبي", image: "https://images.pexels.com/photos/1743227/pexels-photo-1743227.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" },
-    { id: 104, name: "خزانة ملابس عصرية", image: "https://images.pexels.com/photos/1114740/pexels-photo-1114740.jpeg?auto=compress&cs=tinysrgb&w=300&h=300&fit=crop" }
+    { id: 101, name: "1", image: "1.jpeg" },
+    { id: 102, name: "2", image: "2.jpeg" },
+    { id: 103, name: "3", image: "3.jpeg" },
+    { id: 104, name: "4", image: "4.jpeg" }
 ];
 
 function loadProducts() {
